@@ -24,6 +24,13 @@
             </v-list-tile-action>
         </v-list-tile>
     </v-list-item>
+    <v-snackbar 
+        :timeout="timeout"
+        :bottom="true"
+        v-model="snackbar">
+        Сохранено
+        <v-btn flat class="pink--text" @click.native="snackbar = false">ЗАКРЫТЬ</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -35,6 +42,12 @@ import { copy } from 'core/fs';
 export default {
   name: 'v-file',
   props: ['file'],
+  data() {
+      return {
+          timeout: 1500,
+          snackbar: false
+      }
+  },
   methods: {
     handleSave() {
         remote.dialog.showSaveDialog({
@@ -44,6 +57,7 @@ export default {
             if (filename) {
                 copy(this.file.output, filename, () => {
                     console.log('COPITED')
+                    this.snackbar = true;
                 });
             }
         })
