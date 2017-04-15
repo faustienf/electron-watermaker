@@ -1,10 +1,21 @@
 const { ipcMain } = require('electron')
 const { Video } = require('./services/Video')
+const { logger } = require('../core/logger')
 
+let queueIsWaiting = true;
 const queue = [];
 
-function backend() {
-    ipcMain.on('queue:add', (e, newFile) => {  
+function startQueue(e) {
+    if (!queueIsWaiting) return;
+    queueIsWaiting = false;
+
+    (function loop(e) {
+        const file = queue.shift();
+        
+        if (!file) {
+            queueIsWaiting = true;
+            return;
+        }
 
         const finished = (err, res) => {
             if (err) {
@@ -13,11 +24,10 @@ function backend() {
                 file.isHaveWatermark =  true;
                 file.output = res;
                 e.sender.send('file:finish', {err, res: file})
+                
+                if (queue.length) loop(e);
             }
         }
-
-        queue.push(newFile);
-        const file = queue.shift()
 
         switch(file.type) {
             case 'video':
@@ -26,6 +36,18 @@ function backend() {
             default:
                 throw new Error(`${file.type} invalid`);
         }
+    })(e)
+
+    
+}
+
+function backend() {
+    ipcMain.on('queue:add', (e, newFile) => {  
+
+        
+
+        queue.push(newFile);
+        if (queueIsWaiting) startQueue(e);
 
         // const progress = (res) => {
         //     e.sender.send('video:progress', res)

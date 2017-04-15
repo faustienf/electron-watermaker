@@ -12,10 +12,10 @@
 
 
 <script>
-import uuid from 'uuid/v4';
-import { mapActions } from 'vuex';
-import { ipcRenderer, remote } from 'electron';
-
+import uuid from 'uuid/v4'
+import { mapActions } from 'vuex'
+import { ipcRenderer, remote } from 'electron'
+import { basename } from 'path'
 
 export default {
     name: 'toolbar',
@@ -30,6 +30,7 @@ export default {
 
                         const file = {
                             id: uuid(),
+                            name: basename(path),
                             path,
                             type: 'video'
                         }
