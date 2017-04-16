@@ -8,8 +8,6 @@ function hash() {
 
 const Video = {
     applyWatermark(file, callback) {    
-        const watermark = path.join(STORAGE_PATH, 'data', 'ni_watermark.png');
-        const logo = path.join(STORAGE_PATH, 'data', 'ni_logo.png');
         const output = path.join(STORAGE_PATH, 'output', hash() + '_output' + path.extname(file.path))
 
         logger.debug(output);
@@ -18,14 +16,14 @@ const Video = {
 
         ffmpeg(file.path)
             .audioCodec('copy')
-            .addInput(watermark) // top-left
-            .addInput(watermark) // top-right
-            .addInput(watermark) // bottom-right
-            .addInput(watermark) // left-top-middle
-            .addInput(watermark) // left-bottom-middle
-            .addInput(watermark) // right-top-middle
-            .addInput(watermark) // right-bottom-middle
-            .addInput(logo) // bottom-right
+            .addInput(WATERMARK) // top-left
+            .addInput(WATERMARK) // top-right
+            .addInput(WATERMARK) // bottom-right
+            .addInput(WATERMARK) // left-top-middle
+            .addInput(WATERMARK) // left-bottom-middle
+            .addInput(WATERMARK) // right-top-middle
+            .addInput(WATERMARK) // right-bottom-middle
+            .addInput(LOGO) // bottom-right
             .complexFilter([
                 {
                     filter: 'overlay', options: {

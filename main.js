@@ -3,10 +3,14 @@ const path = require('path')
 const url = require('url')
 const fs = require('fs')
 
+const WATERMARK_FILENAME = 'watermark.png';
+const LOGO_FILENAME = 'logo.png';
+
 global.IS_DEV = process.env.NODE_ENV === 'development'
 global.BASE_PATH = __dirname
-global.DATA_PATH = path.join(__dirname, 'data')
 global.STORAGE_PATH = path.join(__dirname, 'storage')
+global.WATERMARK = path.join(STORAGE_PATH, 'data', WATERMARK_FILENAME);
+global.LOGO = path.join(STORAGE_PATH, 'data', LOGO_FILENAME);
 
 const storageFolders = [
   global.STORAGE_PATH,

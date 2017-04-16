@@ -40,7 +40,7 @@ import { remote } from 'electron';
 import { copy } from 'core/fs';
 
 export default {
-  name: 'v-file',
+  name: 'file',
   props: ['file'],
   data() {
       return {
@@ -56,7 +56,6 @@ export default {
         }, filename => {
             if (filename) {
                 copy(this.file.output, filename, () => {
-                    console.log('COPITED')
                     this.snackbar = true;
                 });
             }

@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron')
 const { Video } = require('./services/Video')
 const { logger } = require('../core/logger')
+const { copy } = require('../core/fs')
 
 let queueIsWaiting = true;
 const queue = [];
@@ -40,23 +41,33 @@ function startQueue(e) {
 
     
 }
+function getInitialState() {
+    return {
+        logo: LOGO,
+        watermark: WATERMARK
+    }
+}
 
 function backend() {
-    ipcMain.on('queue:add', (e, newFile) => {  
+    ipcMain.on('assets:save', (e, file) => {  
+        const output = file.type === 'logo'
+            ? LOGO
+            : WATERMARK
 
-        
-
-        queue.push(newFile);
-        if (queueIsWaiting) startQueue(e);
-
-        // const progress = (res) => {
-        //     e.sender.send('video:progress', res)
-        // }
-
-        
-
-        
+        copy(file.path, output, () => {
+            e.sender.send('assets:saved')
+        });
     })
+
+    ipcMain.on('state:get', e => {  
+        e.sender.send('state:send', getInitialState())       
+    })
+
+    ipcMain.on('queue:add', (e, newFile) => {  
+        queue.push(newFile);
+        if (queueIsWaiting) startQueue(e);        
+    })
+    
 }
 
 exports.backend = backend

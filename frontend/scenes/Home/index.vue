@@ -11,39 +11,47 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 import { ipcRenderer } from 'electron';
 import Toolbar from './toolbar.vue';
 import File from './file.vue';
 
-export default {
-  name: 'home',
-  components: {
-      File,
-      Toolbar
-  },
-  computed: {
-    files() {
-      return this.$store.state.files;
-    }
-  },
-  created() {
-    ipcRenderer.on('file:finish', (e, {err, res}) => {
-        console.log(err);
-        if (err) throw new Error(err);
+function onFinish(e, {err, res}) {
+    console.log(err);
+    if (err) throw new Error(err);
 
-        this.updateFile(res)
-    })
-    ipcRenderer.on('file:error', (e, err) => {
-        console.log(err);
-        if (err) throw new Error(err);
-    })
-  },
-  methods: {
-    ...mapActions({
-        updateFile: 'UPDATE_FILE'
-    })
-  }
+    this.updateFile(res)
+}
+
+function onError(e, err) {
+    console.log(err);
+    if (err) throw new Error(err);
+}
+
+export default {
+    name: 'home',
+    components: {
+        File,
+        Toolbar
+    },
+    computed: {
+        ...mapGetters([
+            'files'
+        ])
+    },
+    created() {
+        ipcRenderer.on('file:finish', onFinish)
+        ipcRenderer.on('file:error', onError)
+    },
+    destroyed() {
+        ipcRenderer.removeListener('file:finish', onFinish)
+        ipcRenderer.removeListener('file:error', onError)
+    },  
+    methods: {
+        ...mapActions([
+            'updateFile'
+        ])
+    }
 }
 
 </script>

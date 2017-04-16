@@ -1,11 +1,14 @@
 <template>
-    <v-toolbar class="indigo">
+    <v-toolbar class="light-blue">
         <v-toolbar-side-icon></v-toolbar-side-icon>
         <v-toolbar-title>My files</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn @click.native="handleClick" class="pink" primary dark>
             выбрать файл
             <v-icon right>cloud_upload</v-icon>
+        </v-btn>
+        <v-btn @click.native="$router.push('/settings')" icon>
+            <v-icon>settings</v-icon>
         </v-btn>
     </v-toolbar>
 </template>
@@ -20,10 +23,12 @@ import { basename } from 'path'
 export default {
     name: 'toolbar',
     methods: {
-        ...mapActions({
-            addFile: 'ADD_FILE'
-        }),
+        ...mapActions([
+            'addFile'
+        ]),
         handleClick(e) {
+            this.addFile();
+            return;
             remote.dialog.showOpenDialog((fileNames) => {
                 if (fileNames && fileNames.length) {
                     fileNames.map(path => {
