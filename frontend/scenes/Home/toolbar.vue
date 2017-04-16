@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="light-blue">
+    <v-toolbar class="indigo">
         <v-toolbar-side-icon></v-toolbar-side-icon>
         <v-toolbar-title>My files</v-toolbar-title>
         <v-spacer></v-spacer>

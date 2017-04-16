@@ -40,8 +40,8 @@ export default {
         ])
     },
     created() {
-        ipcRenderer.on('file:finish', onFinish)
-        ipcRenderer.on('file:error', onError)
+        ipcRenderer.on('file:finish', onFinish.bind(this))
+        ipcRenderer.on('file:error', onError.bind(this))
     },
     destroyed() {
         ipcRenderer.removeListener('file:finish', onFinish)

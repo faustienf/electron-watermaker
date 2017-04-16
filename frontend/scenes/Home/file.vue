@@ -44,7 +44,7 @@ export default {
   props: ['file'],
   data() {
       return {
-          timeout: 1500,
+          timeout: 2000,
           snackbar: false
       }
   },

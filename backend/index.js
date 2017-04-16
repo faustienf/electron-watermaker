@@ -26,7 +26,11 @@ function startQueue(e) {
                 file.output = res;
                 e.sender.send('file:finish', {err, res: file})
                 
-                if (queue.length) loop(e);
+                if (queue.length) {
+                    loop(e);
+                } else {
+                    queueIsWaiting = true;
+                }
             }
         }
 

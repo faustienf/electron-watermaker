@@ -15,7 +15,7 @@ const Video = {
         const m = 50; // margin 50px
 
         ffmpeg(file.path)
-            .audioCodec('copy')
+            // .audioCodec('copy')
             .addInput(WATERMARK) // top-left
             .addInput(WATERMARK) // top-right
             .addInput(WATERMARK) // bottom-right
@@ -72,16 +72,18 @@ const Video = {
                         x: `W-W/4-h-${m}`,
                         y: `H-H/4-h-${m}`,
                     },
-                    inputs: 'right-top-middle', outputs: 'right-bottom-middle'
+                    inputs: 'right-top-middle', 
+                    outputs: 'right-bottom-middle'
                 },
                 {
                     filter: 'overlay', options: {
                         x: `W-w-${m}`,
                         y: `H-h-${m}`,
                     },
-                    inputs: 'right-bottom-middle', outputs: 'output'
+                    inputs: 'right-bottom-middle', 
+                    // outputs: 'out'
                 },
-            ], 'output')
+            ])
             .on('start', (commandLine) => {
                 logger.debug(commandLine);
             })
