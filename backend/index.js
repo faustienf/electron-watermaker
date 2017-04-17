@@ -53,6 +53,12 @@ function getInitialState() {
 }
 
 function backend() {
+    ipcMain.on('file:export', (e, file) => {  
+        copy(file.output, file.input, () => {
+            e.sender.send('file:exported')
+        });
+    })
+
     ipcMain.on('assets:save', (e, file) => {  
         const output = file.type === 'logo'
             ? LOGO

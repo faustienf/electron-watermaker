@@ -35,6 +35,19 @@ export function createStore(state = {}) {
             updateFile({ commit }, file) {
                 commit('UPDATE_FILE', file)
             },
+            exportFile({ commit }, file) {
+                remote.dialog.showSaveDialog({
+                    title: 'Сохранить',
+                    defaultPath: file.path
+                }, input => {
+                    if (input) {
+                        ipcRenderer.send('file:export', {
+                            input,
+                            output: file.output
+                        })
+                    }
+                })
+            },
             addFile({ commit }) {
                 remote.dialog.showOpenDialog((fileNames) => {
                     if (fileNames && fileNames.length) {

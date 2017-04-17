@@ -18,19 +18,12 @@
                     class="primary--text"/>
             </v-list-tile-avatar>
             <v-list-tile-action v-if="file.isHaveWatermark">
-                <v-btn @click.native="handleSave" icon ripple>
+                <v-btn @click.native="exportFile(file)" icon ripple>
                     <v-icon class="pink--text text--lighten-1">file_download</v-icon>
                 </v-btn>
             </v-list-tile-action>
         </v-list-tile>
     </v-list-item>
-    <v-snackbar 
-        :timeout="timeout"
-        :bottom="true"
-        v-model="snackbar">
-        Сохранено
-        <v-btn flat class="pink--text" @click.native="snackbar = false">ЗАКРЫТЬ</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -40,28 +33,13 @@ import { remote } from 'electron';
 import { copy } from 'core/fs';
 
 export default {
-  name: 'file',
-  props: ['file'],
-  data() {
-      return {
-          timeout: 2000,
-          snackbar: false
-      }
-  },
-  methods: {
-    handleSave() {
-        remote.dialog.showSaveDialog({
-            title: 'Сохранить',
-            defaultPath: this.file.path
-        }, filename => {
-            if (filename) {
-                copy(this.file.output, filename, () => {
-                    this.snackbar = true;
-                });
-            }
-        })
+    name: 'file',
+    props: ['file'],
+    methods: {
+        ...mapActions([
+            'exportFile'
+        ])
     }
-  }
 }
 
 </script>

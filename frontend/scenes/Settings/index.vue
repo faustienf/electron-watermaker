@@ -40,11 +40,6 @@ import Toolbar from './toolbar.vue'
 
 export default {
     name: 'settings',
-    data() {
-        return {
-            logo: ''
-        }
-    },
     components: {
         Toolbar
     },

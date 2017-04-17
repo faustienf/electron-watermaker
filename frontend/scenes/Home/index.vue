@@ -7,6 +7,13 @@
             <File v-for="(file, index) in files" :key="index" :file="file"/>
         </v-list>
     </v-card>
+    <v-snackbar 
+        :timeout="timeout"
+        :bottom="true"
+        v-model="snackbar">
+        Сохранено
+        <v-btn flat class="pink--text" @click.native="snackbar = false">ЗАКРЫТЬ</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -28,8 +35,18 @@ function onError(e, err) {
     if (err) throw new Error(err);
 }
 
+function onExport(e) {
+    this.snackbar = true;
+}
+
 export default {
     name: 'home',
+    data() {
+        return {
+            timeout: 2000,
+            snackbar: false
+        }
+    },
     components: {
         File,
         Toolbar
@@ -42,10 +59,12 @@ export default {
     created() {
         ipcRenderer.on('file:finish', onFinish.bind(this))
         ipcRenderer.on('file:error', onError.bind(this))
+        ipcRenderer.on('file:exported', onExport.bind(this))
     },
     destroyed() {
         ipcRenderer.removeListener('file:finish', onFinish)
         ipcRenderer.removeListener('file:error', onError)
+        ipcRenderer.removeListener('file:error', onExport)
     },  
     methods: {
         ...mapActions([
