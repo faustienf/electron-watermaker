@@ -72,8 +72,7 @@ const Video = {
                         x: `W-W/4-h-${m}`,
                         y: `H-H/4-h-${m}`,
                     },
-                    inputs: 'right-top-middle', 
-                    outputs: 'right-bottom-middle'
+                    inputs: 'right-top-middle', outputs: 'right-bottom-middle'
                 },
                 {
                     filter: 'overlay', options: {

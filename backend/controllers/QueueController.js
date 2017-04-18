@@ -1,5 +1,6 @@
 const { Video } = require('../services/Video')
 const { logger } = require('../../core/logger')
+const { fileIs } = require('../../core/fs')
 
 let queueIsWaiting = true;
 const queue = [];
@@ -47,8 +48,10 @@ function startQueue(e) {
 
 const QueueController = {
     add: (e, file) => {  
-        queue.push(file);
-        if (queueIsWaiting) startQueue(e);        
+        if (fileIs('video', file.path)) {
+            queue.push(file);
+            if (queueIsWaiting) startQueue(e);  
+        }
     }
 }
 

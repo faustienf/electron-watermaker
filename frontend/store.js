@@ -1,5 +1,6 @@
 import { ipcRenderer, remote } from 'electron'
 import { basename } from 'path'
+import { fileIs } from 'core/fs'
 import uuid from 'uuid/v4'
 
 function hash() {
@@ -61,11 +62,15 @@ export function createStore(state = {}) {
                             }
 
                             commit('ADD_FILE', file)
-
-                            ipcRenderer.send('queue:add', file)
+                            if (fileIs('video', file.path)) {
+                                ipcRenderer.send('queue:add', file)
+                            }
                         })
                     }
                 })
+            },
+            createImage({ commit }, file) {
+                ipcRenderer.send('image:save', file)
             },
             assetsSave({ commit, state }, type) {
                 remote.dialog.showOpenDialog({
