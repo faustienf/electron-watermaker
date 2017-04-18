@@ -1,5 +1,3 @@
-const { ipcMain } = require('electron')
-
 const { FileController } = require('./controllers/FileController')
 const { AssetsController } = require('./controllers/AssetsController')
 const { StateController } = require('./controllers/StateController')
