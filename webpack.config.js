@@ -114,6 +114,7 @@ module.exports = {
             'services': path.join(__dirname, 'frontend/services'),
             'libs': path.join(__dirname, 'libs'),
             'core': path.join(__dirname, 'core'),
+            'models': path.join(__dirname, 'models'),
         }
     },
     watch: IS_DEV

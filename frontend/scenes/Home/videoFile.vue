@@ -16,7 +16,7 @@
                     class="primary--text"/>
             </v-list-tile-avatar>
             <v-list-tile-action v-if="file.isHaveWatermark">
-                <v-btn @click.native="exportFile(file)" icon ripple>
+                <v-btn @click.native="exportFile()" icon ripple>
                     <v-icon class="pink--text text--lighten-1">file_download</v-icon>
                 </v-btn>
             </v-list-tile-action>
@@ -31,9 +31,9 @@ export default {
     name: 'video-file',
     props: ['file'],
     methods: {
-        ...mapActions([
-            'exportFile'
-        ])
+        exportFile() {
+            this.$root.$emit('file:export', this.file)
+        },
     }
 }
 

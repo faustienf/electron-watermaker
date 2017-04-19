@@ -6,12 +6,12 @@
                 <v-card-row>
                     <v-card-title>
                         Логотип
-                        <v-btn icon class="pink--text" @click.native="assetsSave('logo')">
+                        <v-btn icon class="pink--text" @click.native="chooseAsset('logo')">
                             <v-icon>file_upload</v-icon>
                         </v-btn>
                     </v-card-title>
                 </v-card-row>
-                <v-card-text class="bg-grid" @click="assetsSave('logo')">
+                <v-card-text class="bg-grid" @click="chooseAsset('logo')">
                     <img class="watermark" :src="logoPath">
                 </v-card-text>
             </v-col>
@@ -21,12 +21,12 @@
                 <v-card-row>
                     <v-card-title>
                         Водяной знак
-                        <v-btn icon class="pink--text" @click.native="assetsSave('watermark')">
+                        <v-btn icon class="pink--text" @click.native="chooseAsset('watermark')">
                             <v-icon>file_upload</v-icon>
                         </v-btn>
                     </v-card-title>
                 </v-card-row>
-                <v-card-text class="bg-grid" @click="assetsSave('watermark')">
+                <v-card-text class="bg-grid" @click="chooseAsset('watermark')">
                     <img class="watermark" :src="watermarkPath">
                 </v-card-text>
             </v-col>
@@ -50,9 +50,9 @@ export default {
         ]),
     },
     methods: {
-        ...mapActions([
-            'assetsSave'
-        ])
+        chooseAsset(type) {
+            this.$root.$emit('asset:import', type)
+        }
     }
 }
 

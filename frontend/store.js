@@ -33,65 +33,11 @@ export function createStore(state = {}) {
             updateFile({ commit }, file) {
                 commit('UPDATE_FILE', file)
             },
-            exportFile({ commit }, file) {
-                remote.dialog.showSaveDialog({
-                    title: 'Сохранить',
-                    defaultPath: join(
-                        dirname(file.path), 
-                        file.name.replace(extname(file.name),'') + '_watermarked' + extname(file.output)
-                    )
-                }, input => {
-                    if (input) {
-                        ipcRenderer.send('file:export', {
-                            input,
-                            output: file.output
-                        })
-                    }
-                })
+            addFile({ commit }, file) {
+                commit('ADD_FILE', file)
             },
-            addFile({ commit }) {
-                remote.dialog.showOpenDialog((fileNames) => {
-                    if (fileNames && fileNames.length) {
-                        fileNames.map(path => {
-                            const file = {
-                                id: uuid(),
-                                name: basename(path),
-                                isHaveWatermark: false,
-                                path,
-                                type: fileIs('video', path) ? 'video' : 'image'
-                            }
-
-                            commit('ADD_FILE', file)
-                            if (file.type === 'video') {
-                                ipcRenderer.send('video:save', file)
-                            }
-                        })
-                    }
-                })
-            },
-            createImage({ commit }, file) {
-                ipcRenderer.send('image:save', file)
-            },
-            assetsSave({ commit, state }, type) {
-                remote.dialog.showOpenDialog({
-                    filters: [
-                        {name: 'Images', extensions: ['png']}
-                    ]
-                },(fileNames) => {
-                    if (fileNames && fileNames.length) {
-                        const file = {
-                            path: fileNames[0],
-                            type 
-                        }
-
-                        ipcRenderer.once('assets:saved', (e) => {
-                            file.path = state[type];
-                            commit('UPDATE_HASH', hash())
-                        })
-
-                        ipcRenderer.send('assets:save', file)
-                    }
-                })
+            updateHash({ commit}) {
+                commit('UPDATE_HASH', hash())
             }
         },
         getters: {
