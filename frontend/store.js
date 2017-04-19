@@ -1,11 +1,8 @@
 import { ipcRenderer, remote } from 'electron'
-import { basename } from 'path'
+import { basename, dirname, extname, join } from 'path'
 import { fileIs } from 'core/fs'
+import { hash } from 'core/hash'
 import uuid from 'uuid/v4'
-
-function hash() {
-    return Math.random().toString(36).substring(6);
-}
 
 export function createStore(state = {}) {
     return {
@@ -39,7 +36,10 @@ export function createStore(state = {}) {
             exportFile({ commit }, file) {
                 remote.dialog.showSaveDialog({
                     title: 'Сохранить',
-                    defaultPath: file.path
+                    defaultPath: join(
+                        dirname(file.path), 
+                        file.name.replace(extname(file.name),'') + '_watermarked' + extname(file.output)
+                    )
                 }, input => {
                     if (input) {
                         ipcRenderer.send('file:export', {
@@ -58,12 +58,12 @@ export function createStore(state = {}) {
                                 name: basename(path),
                                 isHaveWatermark: false,
                                 path,
-                                type: 'video'
+                                type: fileIs('video', path) ? 'video' : 'image'
                             }
 
                             commit('ADD_FILE', file)
-                            if (fileIs('video', file.path)) {
-                                ipcRenderer.send('queue:add', file)
+                            if (file.type === 'video') {
+                                ipcRenderer.send('video:save', file)
                             }
                         })
                     }

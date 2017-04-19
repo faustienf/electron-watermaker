@@ -46,8 +46,8 @@ function startQueue(e) {
 }
 
 
-const QueueController = {
-    add: (e, file) => {  
+const VideoController = {
+    save: (e, file) => {  
         if (fileIs('video', file.path)) {
             queue.push(file);
             if (queueIsWaiting) startQueue(e);  
@@ -55,4 +55,4 @@ const QueueController = {
     }
 }
 
-exports.QueueController = QueueController;
+exports.VideoController = VideoController;

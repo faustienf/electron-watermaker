@@ -45,3 +45,8 @@ $grid: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAA
     max-width: 200px;
     max-height: 200px;
 }
+
+.hide {
+    height: 0;
+    overflow: hidden;
+}

@@ -21,7 +21,7 @@
                 </v-btn>
             </v-list-tile-action>
         </v-list-tile>
-        <div>
+        <div class="hide">
             <canvas ref="canvas"></canvas>
         </div>
     </v-list-item>
@@ -29,6 +29,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { ipcRenderer } from 'electron'
 
 export default {
     name: 'file',
@@ -145,18 +146,14 @@ export default {
                 canvas.height - this.$logo.height - this.margin
             );
 
-            const filename = '/home/alex/wowk/watermarker/storage/simple.png'
+            const base64 = canvas.toDataURL('image/jpeg', 0.5)
 
-            // canvas.toBlob(function(blob) {
-            //     saveAs(blob, filename);
-            // })
+            const file = {
+                ...this.file,
+                base64 
+            }
 
-            // saveAs(blob, "pretty image.png");
-
-            // this.createImage({
-            //     ...this.file,
-            //     blob: 
-            // })
+            ipcRenderer.send('image:save', file)
         }
     }
 }

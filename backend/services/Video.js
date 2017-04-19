@@ -1,10 +1,7 @@
 const path = require('path')
 const { logger } = require('../../core/logger')
 const { ffmpeg } = require('../../libs/ffmpeg')
-
-function hash() {
-    return Math.random().toString(36).substring(6);
-}
+const { hash } = require('../../core/hash')
 
 const Video = {
     applyWatermark(file, callback) {    
