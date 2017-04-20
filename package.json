@@ -11,7 +11,7 @@
     "wp:dev": "NODE_ENV=development ./node_modules/.bin/webpack",
     "wp:prod": "NODE_ENV=production ./node_modules/.bin/webpack",
     "build:frontend": "npm run wp:prod",
-    "build:app": "NODE_ENV=production ./node_modules/.bin/electron-packager --platform='linux,win32' --overwrite --out=build --ignore='(frontend|build|storage)' .",
+    "build:app": "NODE_ENV=production ./node_modules/.bin/electron-packager --platform='linux,win32' --overwrite --out=build --ignore='\\.git(ignore|modules)(frontend|build|output|logs)' .",
     "build": "npm run binaries && npm run build:frontend && npm run build:app",
     "binaries": "./node_modules/.bin/ffbinaries win-64 mac linux-64 --c=ffmpeg --output=./libs/ffmpeg"
   },
