@@ -2,7 +2,7 @@
     <v-list-item>
         <v-list-tile>
             <v-list-tile-avatar>
-                <v-icon class="lime white--text">videocam</v-icon>
+                <v-icon class="cyan white--text">videocam</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
                 <v-list-tile-title>{{ file.name }}</v-list-tile-title>
