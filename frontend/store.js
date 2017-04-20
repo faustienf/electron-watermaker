@@ -21,7 +21,11 @@ export function createStore(state = {}) {
                 const index = state.files.findIndex(f => f.id === newFile.id);
                 if (index !== -1) {
                     const files = state.files.concat([]);
-                    files[index] = newFile
+                    let currentFile = files[index]
+                    files[index] = {
+                        ...currentFile,
+                        ...newFile,
+                    }
                     state.files = files;
                 }
             },

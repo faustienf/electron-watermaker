@@ -33,7 +33,9 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1400, height: 800})
+  const width = IS_DEV ? 1400 : 575;
+  const height = IS_DEV ? 800 : 550;
+  win = new BrowserWindow({width, height})
 
   
   if (IS_DEV) {
@@ -41,7 +43,6 @@ function createWindow () {
     BrowserWindow.addDevToolsExtension(VUE_EXT_PATH);
     win.webContents.openDevTools()
   } else {
-    win.webContents.openDevTools()
     win.setMenu(null);
   }
   

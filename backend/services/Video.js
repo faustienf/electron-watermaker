@@ -1,13 +1,13 @@
 const path = require('path')
+const fs = require('fs')
+const filesize = require('filesize')
 const { logger } = require('../../core/logger')
 const { ffmpeg } = require('../../libs/ffmpeg')
 const { hash } = require('../../core/hash')
 
 const Video = {
-    applyWatermark(file, callback) {    
+    applyWatermark(file, progress, callback) {    
         const output = path.join(STORAGE_PATH, 'output', hash() + '_output' + path.extname(file.path))
-
-        logger.debug(output);
 
         const m = 50; // margin 50px
 
@@ -84,8 +84,14 @@ const Video = {
                 logger.debug(commandLine);
             })
             .on('end', (stdout, stderr) => {
-                logger.info('SUCCESSFUl');
+                logger.info('done');
                 callback(null, output);
+            })
+            .on('progress', () => {
+                const stat = fs.statSync(output);
+                const size = filesize(stat.size)
+                logger.info(size);
+                progress(size)
             })
             .on('error', (err) => {
                 throw new Error(err.message);

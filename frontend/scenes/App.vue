@@ -35,6 +35,7 @@ export default {
         ipcRenderer.on('file:error', this.handleError)
         ipcRenderer.on('file:exported', this.handleFileExport)
         ipcRenderer.on('file:finish', this.handleFileFinish)
+        ipcRenderer.on('file:progress', this.handleFileProgress)
 
         ipcRenderer.on('assets:saved', this.handleAssetExport)
     },
@@ -46,6 +47,7 @@ export default {
         ipcRenderer.removeListener('file:error', this.handleError)
         ipcRenderer.removeListener('file:exported',  this.handleFileExport)
         ipcRenderer.removeListener('file:finish', this.handleFileFinish)
+        ipcRenderer.removeListener('file:progress', this.handleFileProgress)
 
         ipcRenderer.removeListener('assets:saved', this.handleAssetExport)
     },
@@ -57,6 +59,9 @@ export default {
         ]),
         handleFileExport(e) {
             this.snackbar = true;
+        },
+        handleFileProgress(e, file) {
+            this.updateFile(file)
         },
         handleError(e, err) {
             console.log(err);

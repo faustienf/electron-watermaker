@@ -33,9 +33,16 @@ function startQueue(e) {
             }
         }
 
+        function progress(size) {
+            e.sender.send('file:progress', {
+                id: file.id,
+                size
+            })
+        } 
+
         switch(file.type) {
             case 'video':
-                Video.applyWatermark(file, finished);
+                Video.applyWatermark(file, progress, finished);
                 break;
             default:
                 throw new Error(`${file.type} invalid`);

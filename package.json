@@ -10,7 +10,7 @@
     "app:dev": "NODE_ENV=development ./node_modules/.bin/electron .",
     "wp:dev": "NODE_ENV=development ./node_modules/.bin/webpack",
     "wp:prod": "NODE_ENV=production ./node_modules/.bin/webpack",
-    "build:frontend": "npm run webpack:prod",
+    "build:frontend": "npm run wp:prod",
     "build:app": "NODE_ENV=production ./node_modules/.bin/electron-packager --platform='linux,win32' --overwrite --out=build --ignore='(frontend|build|storage)' .",
     "build": "npm run binaries && npm run build:frontend && npm run build:app",
     "binaries": "./node_modules/.bin/ffbinaries win-64 mac linux-64 --c=ffmpeg --output=./libs/ffmpeg"
@@ -49,6 +49,7 @@
   "dependencies": {
     "electron": "^1.6.2",
     "ffbinaries": "^0.1.8",
+    "filesize": "^3.5.6",
     "fluent-ffmpeg": "^2.1.0",
     "uuid": "^3.0.1",
     "vue": "^2.2.6",

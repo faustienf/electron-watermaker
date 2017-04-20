@@ -10,6 +10,7 @@ export function FileModel(path) {
         name: basename(path),
         isHaveWatermark: false,
         path,
+        size: 'в очереди',
         type: fileIs('video', path) 
             ? 'video' 
             : 'image'

@@ -2,7 +2,7 @@
     <v-list-item>
         <v-list-tile>
             <v-list-tile-avatar>
-                <v-icon class="teal white--text">insert_photo</v-icon>
+                <v-icon class="light-blue white--text">insert_photo</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
                 <v-list-tile-title>{{ file.name }}</v-list-tile-title>
@@ -43,6 +43,8 @@ export default {
         }
     },
     mounted() {
+        if (this.file.isHaveWatermark) return;
+
         const logoPromise = new Promise((resolve, reject) => {
             const logo = new Image();
             logo.src = this.logoPath;
