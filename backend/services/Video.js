@@ -7,7 +7,7 @@ const { hash } = require('../../core/hash')
 
 const Video = {
     applyWatermark(file, progress, callback) {    
-        const output = path.join(STORAGE_PATH, 'output', hash() + '_output' + path.extname(file.path))
+        const output = path.join(STORAGE_PATH, 'output', hash() + '_output.mp4')
 
         const m = 50; // margin 50px
 
