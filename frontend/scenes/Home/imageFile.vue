@@ -147,7 +147,7 @@ export default {
                 canvas.height - this.$logo.height - this.margin
             );
 
-            const base64 = canvas.toDataURL('image/jpeg', 0.5)
+            const base64 = canvas.toDataURL('image/jpeg', 1)
 
             const file = {
                 ...this.file,
